@@ -11,11 +11,6 @@ spring:
   application:
     name: Checkout-Service
 
-  data:
-    mongodb:
-      uri: mongodb+srv://gpmoral:gMC20002@cluster0.paxidwi.mongodb.net/?retryWrites=true&w=majority
-      database: Orders
-
   datasource:
     username: 'gmorales'
     url: jdbc:postgresql://localhost:5432/customer
@@ -30,6 +25,8 @@ spring:
       ddl-auto: update
 
     show-sql: true
+
+
 
 eureka:
   client:

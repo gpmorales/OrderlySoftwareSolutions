@@ -39,6 +39,7 @@ public class CustomerModel {
     @NotNull
     @NotEmpty
     private String password;
+
     private String phoneNumber;
 
     // @Data creates the getters and setters for this class's defined attributes

@@ -24,12 +24,11 @@ public class CheckoutController {
     }
 
     @PostMapping(value = "/confirmCheckout", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Object> addItem(@RequestParam String restaurantId,
-                                          @RequestParam String customerId,
+    public ResponseEntity<Object> addItem(@RequestParam String customerId,
                                           @RequestBody @Valid Order order,
                                           BindingResult bindingResult) {
         try {
-            if (restaurantId == null || restaurantId.isEmpty() || customerId == null || customerId.isEmpty()) {
+            if (customerId == null || customerId.isEmpty()) {
                 return ResponseEntity.badRequest().body("Params are empty or null");
             }
 
@@ -37,7 +36,7 @@ public class CheckoutController {
                 return ResponseEntity.badRequest().body("Invalid order request");
             }
 
-            final Optional<Order> orderResult = checkoutService.insertOrder(restaurantId, customerId, order);
+            final Optional<Order> orderResult = checkoutService.insertOrder(customerId, order);
 
             if (orderResult.isEmpty()) {
                 return ResponseEntity.internalServerError().body("Customer account was not found");
