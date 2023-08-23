@@ -1,6 +1,6 @@
 # OrderlySoftwareSolutions
 
-OrderlyServices is a sophisticated software solution that leverages Spring
+OrderlyServices is a software solution that leverages Spring
 Microservices and Spring Cloud to provide a comprehensive platform for restaurant management
 and customer engagement. This innovative system encompasses various modules, including customer 
 registration and authentication, dynamic menu creation, and streamlined order processing.
