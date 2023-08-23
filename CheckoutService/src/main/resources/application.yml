@@ -1,0 +1,44 @@
+server:
+  port: 8084
+
+spring:
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    enabled: true
+
+  application:
+    name: Checkout-Service
+
+  data:
+    mongodb:
+      uri: mongodb+srv://gpmoral:gMC20002@cluster0.paxidwi.mongodb.net/?retryWrites=true&w=majority
+      database: Orders
+
+  datasource:
+    username: 'gmorales'
+    url: jdbc:postgresql://localhost:5432/customer
+    password: 'password'
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+  instance:
+    hostname: localhost
+
+

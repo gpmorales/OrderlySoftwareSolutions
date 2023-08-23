@@ -1,0 +1,26 @@
+server:
+  port: 8083
+
+spring:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+  application:
+    name: Menu-Service
+  data:
+    mongodb:
+      uri: mongodb+srv://gpmoral:gMC20002@cluster0.paxidwi.mongodb.net/?retryWrites=true&w=majority
+      database: Menus
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+  instance:
+    hostname: localhost
+
+
