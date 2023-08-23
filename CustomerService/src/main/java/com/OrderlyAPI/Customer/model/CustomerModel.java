@@ -14,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "customer_model")
 public class CustomerModel {
     @Id
     @SequenceGenerator(

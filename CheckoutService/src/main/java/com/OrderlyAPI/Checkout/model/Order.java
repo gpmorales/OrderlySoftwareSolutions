@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Table(name = "orders")
+@Table(name = "order_model")
 public class Order {
     @Id
     @SequenceGenerator(
