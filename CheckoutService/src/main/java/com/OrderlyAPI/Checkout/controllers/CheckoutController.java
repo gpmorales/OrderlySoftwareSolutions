@@ -1,15 +1,14 @@
 package com.OrderlyAPI.Checkout.controllers;
 
-import com.OrderlyAPI.Checkout.model.Order;
+import com.OrderlyAPI.Checkout.model.OrderModel;
 import com.OrderlyAPI.Checkout.service.CheckoutService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,18 +24,17 @@ public class CheckoutController {
 
     @PostMapping(value = "/confirmCheckout", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addItem(@RequestParam String customerId,
-                                          @RequestBody @Valid Order order,
-                                          BindingResult bindingResult) {
+                                          @RequestBody Map<String, String> orderData) {
         try {
             if (customerId == null || customerId.isEmpty()) {
                 return ResponseEntity.badRequest().body("Params are empty or null");
             }
 
-            if (bindingResult.hasErrors()) {
+            if (orderData.isEmpty()) {
                 return ResponseEntity.badRequest().body("Invalid order request");
             }
 
-            final Optional<Order> orderResult = checkoutService.insertOrder(customerId, order);
+            final Optional<OrderModel> orderResult = checkoutService.insertOrder(customerId, orderData);
 
             if (orderResult.isEmpty()) {
                 return ResponseEntity.internalServerError().body("Customer account was not found");

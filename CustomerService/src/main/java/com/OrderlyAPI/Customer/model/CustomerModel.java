@@ -27,6 +27,7 @@ public class CustomerModel {
     )
     private Integer ID;
 
+
     @NotNull
     @NotEmpty
     private String firstName;

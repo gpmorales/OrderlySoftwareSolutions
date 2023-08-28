@@ -1,12 +1,13 @@
 package com.OrderlyAPI.Checkout.service;
 
 import com.OrderlyAPI.Checkout.model.CustomerModel;
-import com.OrderlyAPI.Checkout.model.Order;
+import com.OrderlyAPI.Checkout.model.OrderModel;
 import com.OrderlyAPI.Checkout.repository.CustomerRepository;
 import com.OrderlyAPI.Checkout.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,16 +23,22 @@ public class CheckoutService {
         this.customerRepository = customerRepository;
     }
 
-    public Optional<Order> insertOrder(String customerId, Order order) {
-        final Integer id = Integer.parseInt(customerId);
+    // TODO -> finish impl
+    public Optional<OrderModel> insertOrder(String customerId, Map order) {
+        try {
+            final Integer id = Integer.parseInt(customerId);
 
-        final Optional<CustomerModel> customerQueryResult = customerRepository.findById(id);
+            final Optional<CustomerModel> customerQueryResult = customerRepository.findById(id);
 
-        if (customerQueryResult.isEmpty()) {
+            if (customerQueryResult.isEmpty()) {
+                return Optional.empty();
+            }
+
+            return Optional.of(orderRepository.save(null));
+
+        } catch (NumberFormatException e) {
             return Optional.empty();
         }
-
-        return Optional.of(orderRepository.save(order));
     }
 
 }

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order_model")
-public class Order {
+public class OrderModel {
     @Id
     @SequenceGenerator(
             name = "order_id_sequence",
@@ -28,17 +28,26 @@ public class Order {
     )
     private Integer ID;
 
+    /**
+     *  ManyToOne creates a relationship between the Order_model table and the Customer_model
+     *  where there can be many Order entities related to a singular Customer entity
+     *
+     *  Parameters:
+     *  name - This attribute specifies the name of the column in the owning entity's table
+     *  (in this case the order_model table) that will hold the relational data, acting as a foreign key
+     *
+     *  referencedColumnName - This attribute specifies the name of the column in the related
+     *  entity's table (in this case the customer_model table) that will be referenced by the name column
+     *  in the owning entity's table (order_model)
+     */
     @NotNull
-    @NotEmpty
-    private Integer customerId;
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id")
+    private CustomerModel customer;
 
     @NotNull
     @NotEmpty
     private String restaurantId;
-
-    @NotNull
-    @NotEmpty
-    private String customerEmail;
 
     @NotNull
     @NotEmpty
