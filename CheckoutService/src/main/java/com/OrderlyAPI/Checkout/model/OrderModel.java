@@ -40,9 +40,8 @@ public class OrderModel {
      *  entity's table (in this case the customer_model table) that will be referenced by the name column
      *  in the owning entity's table (order_model)
      */
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id")
+    @JoinColumn(name = "customer", referencedColumnName = "id")
     private CustomerModel customer;
 
     @NotNull
