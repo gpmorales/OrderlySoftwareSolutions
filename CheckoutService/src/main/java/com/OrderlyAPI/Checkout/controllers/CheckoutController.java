@@ -6,9 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -24,17 +25,18 @@ public class CheckoutController {
 
     @PostMapping(value = "/confirmCheckout", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addItem(@RequestParam String customerId,
-                                          @RequestBody Map<String, String> orderData) {
+                                          @RequestBody @Valid OrderModel order,
+                                          BindingResult bindingResult) {
         try {
             if (customerId == null || customerId.isEmpty()) {
                 return ResponseEntity.badRequest().body("Params are empty or null");
             }
 
-            if (orderData.isEmpty()) {
+            if (bindingResult.hasErrors()) {
                 return ResponseEntity.badRequest().body("Invalid order request");
             }
 
-            final Optional<OrderModel> orderResult = checkoutService.insertOrder(customerId, orderData);
+            final Optional<OrderModel> orderResult = checkoutService.insertOrder(customerId, order);
 
             if (orderResult.isEmpty()) {
                 return ResponseEntity.internalServerError().body("Customer account was not found");

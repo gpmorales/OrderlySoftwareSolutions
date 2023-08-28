@@ -7,7 +7,7 @@ import com.OrderlyAPI.Checkout.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Optional;
 
 @Service
@@ -24,7 +24,7 @@ public class CheckoutService {
     }
 
     // TODO -> finish impl
-    public Optional<OrderModel> insertOrder(String customerId, Map order) {
+    public Optional<OrderModel> insertOrder(String customerId, OrderModel order) throws InvalidPropertiesFormatException {
         try {
             final Integer id = Integer.parseInt(customerId);
 
@@ -34,10 +34,17 @@ public class CheckoutService {
                 return Optional.empty();
             }
 
-            return Optional.of(orderRepository.save(null));
+            /** Create bidirectional relation between the order entity and the customer entity */
+            CustomerModel customer = customerQueryResult.get();
+            customer.getOrders().add(order);
+            order.setCustomer(customer);
+
+            customerRepository.saveAndFlush(customer);
+
+            return Optional.of(orderRepository.saveAndFlush(order));
 
         } catch (NumberFormatException e) {
-            return Optional.empty();
+            throw new InvalidPropertiesFormatException(e.getMessage());
         }
     }
 
